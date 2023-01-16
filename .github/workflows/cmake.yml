@@ -1,0 +1,44 @@
+name: build
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+        with:
+          repository: vgmstream/vgmstream
+          path: vgmstream
+
+      - name: Configure stuff
+        working-directory: ${{github.workspace}}
+        run: |
+          sudo apt install yasm
+          git apply --verbose patch
+          mkdir ${{github.workspace}}/build
+          cd ${{github.workspace}}/build
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/tmp ..
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . -j 6 --target libvgmstream_shared install
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: libvgmstream-linux-amd64
+          path: ${{github.workspace}}/tmp
+          retention-days: 5

@@ -1,0 +1,29 @@
+LIBVGMSTREAM_1.0 {
+  global:
+    init_vgmstream;
+    init_vgmstream_from_STREAMFILE;
+    reset_vgmstream;
+    close_vgmstream;
+    get_vgmstream_play_samples;
+    render_vgmstream;
+    seek_vgmstream;
+    describe_vgmstream;
+    describe_vgmstream_info;
+    get_vgmstream_average_bitrate;
+    vgmstream_get_formats;
+    vgmstream_get_common_formats;
+    vgmstream_force_loop;
+    vgmstream_set_loop_target;
+    vgmstream_is_virtual_filename;
+    allocate_vgmstream;
+    setup_vgmstream;
+    vgmstream_open_stream;
+    vgmstream_open_stream_bf;
+    get_vgmstream_coding_description;
+    get_vgmstream_layout_description;
+    get_vgmstream_meta_description;
+    setup_state_vgmstream;
+
+  local:
+    *;
+};

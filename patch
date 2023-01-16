@@ -1,0 +1,38 @@
+From 9567e12287045f4f022f11ab1c94bd28f08c175e Mon Sep 17 00:00:00 2001
+From: Lukas Cone <lukas.kuzel.ch@gmail.com>
+Date: Sat, 14 Jan 2023 18:04:34 +0100
+Subject: [PATCH] patch
+
+---
+ vgmstream/cmake/dependencies/ffmpeg.cmake | 2 ++
+ vgmstream/cmake/dependencies/mpg123.cmake | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/vgmstream/cmake/dependencies/ffmpeg.cmake b/vgmstream/cmake/dependencies/ffmpeg.cmake
+index e846c53d..f3137113 100644
+--- a/vgmstream/cmake/dependencies/ffmpeg.cmake
++++ b/vgmstream/cmake/dependencies/ffmpeg.cmake
+@@ -119,6 +119,8 @@ if(USE_FFMPEG)
+ 				--disable-sdl2
+ 				--disable-iconv
+ 				--disable-everything
++				--disable-vulkan
++				--enable-pic
+ 				--enable-hwaccels
+ 				--enable-swresample
+ 				--enable-parser=${FFMPEG_CONF_PARSER}
+diff --git a/vgmstream/cmake/dependencies/mpg123.cmake b/vgmstream/cmake/dependencies/mpg123.cmake
+index 143360c5..2d38c19e 100644
+--- a/vgmstream/cmake/dependencies/mpg123.cmake
++++ b/vgmstream/cmake/dependencies/mpg123.cmake
+@@ -39,6 +39,7 @@ if(NOT WIN32 AND USE_MPEG)
+ 			set(MPEG_CONFIGURE
+ 				--enable-static
+ 				--disable-shared
++				--with-pic=yes
+ 				CC="${CMAKE_C_COMPILER}"
+ 				AR="${CMAKE_AR}"
+ 				RANLIB="${CMAKE_RANLIB}"
+-- 
+2.34.1
+

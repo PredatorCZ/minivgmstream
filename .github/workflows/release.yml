@@ -1,0 +1,31 @@
+name: release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download artifacts
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: cmake.yml
+        branch: ${{ github.event.release.target_commitish }}
+        workflow_conclusion: success
+
+    - name: Repack them
+      run: |
+        for file in *; do
+          if [ -d $file ]; then
+              pushd $file
+              tar -rf ../$file.tar .
+              popd
+          fi
+          xz -c $file.tar > $file.tar.xz
+        done
+    - name: Release them
+      uses: softprops/action-gh-release@v1
+      with:
+        files: '*.tar.xz'
